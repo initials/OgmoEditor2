@@ -206,6 +206,7 @@
     <Compile Include="LevelEditors\Tools\EntityTools\EntityResizeTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntitySelectionTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\FlxCaveGenerator.cs" />
+    <Compile Include="LevelEditors\Tools\GridTools\GridCaveTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridFloodTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridLineTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridMoveSelectionTool.cs" />
@@ -682,6 +683,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\tools\addNode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tools\cave.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\tools\eraser.png">
