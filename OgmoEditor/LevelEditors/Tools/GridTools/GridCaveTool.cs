@@ -13,28 +13,25 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
         private bool drawMode;
         private GridDrawAction drawAction;
 
-        //private FlxCaveGenerator cave;
-
         public GridCaveTool()
             : base("Cave", "cave.png")
         {
-            //Console.WriteLine(LayerEditor.Layer.Definition.Grid.Width + "  " + LayerEditor.Layer.Definition.Grid.Height);
-            //cave = new FlxCaveGenerator(50,50);
             drawing = false;
         }
 
+        /// <summary>
+        /// Creates a cave style level.
+        /// </summary>
+        /// <param name="location"></param>
         public override void OnMouseLeftDown(System.Drawing.Point location)
         {
             if (!drawing)
             {
                 drawing = true;
                 drawMode = true;
-                //setCell(location, true);
 
                 int sizeX = LayerEditor.Layer.GridCellsX;
                 int sizeY = LayerEditor.Layer.GridCellsY;
-
-                Console.WriteLine(sizeX + " " + sizeY);
 
                 FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.GridCellsX, LayerEditor.Layer.GridCellsY);
                 int[,] level = cave.generateCaveLevel();
@@ -47,7 +44,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
                         if (level[j, i] == 1)
                         {
-                            //Console.WriteLine("In loop" + j + " " + i);
                             setCell(p, true);
                         }
                         else
