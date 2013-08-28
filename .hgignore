@@ -1,0 +1,11 @@
+﻿# use glob syntax.
+syntax: glob
+*.suo
+OgmoEditor/OgmoEditor
+OgmoEditor/publish
+OgmoEditor/bin
+OgmoEditor/obj
+OgmoEditor/OgmoEditor.csproj.Debug.cachefile
+OgmoEditor/OgmoEditor.csproj.Release.cachefile
+OgmoEditor/OgmoEditor.csproj.user
+*.db
