@@ -34,6 +34,8 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                 int sizeY = LayerEditor.Layer.GridCellsY;
 
                 FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.GridCellsX, LayerEditor.Layer.GridCellsY);
+                cave.genInitMatrix(LayerEditor.Layer.GridCellsX, LayerEditor.Layer.GridCellsY);
+                
                 int[,] level = cave.generateCaveLevel();
 
                 for (int i = 0; i < sizeX; i++)
@@ -60,8 +62,32 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
             if (!drawing)
             {
                 drawing = true;
-                drawMode = false;
-                setCell(location, false);
+                drawMode = true;
+
+                int sizeX = LayerEditor.Layer.GridCellsX;
+                int sizeY = LayerEditor.Layer.GridCellsY;
+
+                FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.GridCellsX, LayerEditor.Layer.GridCellsY);
+                cave.genInitMatrix(LayerEditor.Layer.GridCellsX, LayerEditor.Layer.GridCellsY);
+
+                int[,] level = cave.generateCaveLevel();
+
+                for (int i = 0; i < sizeX; i++)
+                {
+                    for (int j = 0; j < sizeY; j++)
+                    {
+                        System.Drawing.Point p = new System.Drawing.Point(i * LayerEditor.Layer.Definition.Grid.Width, j * LayerEditor.Layer.Definition.Grid.Height);
+
+                        if (level[j, i] == 1)
+                        {
+                            setCell(p, false);
+                        }
+                        else
+                        {
+                            setCell(p, true);
+                        }
+                    }
+                }
             }
         }
 

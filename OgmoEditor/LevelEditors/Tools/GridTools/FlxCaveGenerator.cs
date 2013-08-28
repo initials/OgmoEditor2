@@ -47,9 +47,15 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
         public FlxCaveGenerator(int nCols, int nRows)
         {
+            _rand = null;
 
     		_numTilesCols = nCols;
 	    	_numTilesRows = nRows;
+
+            initWallRatio = random(0.4f, 0.6f);
+
+            Console.WriteLine(initWallRatio.ToString());
+
 
         }
         static public float random(double min, double max)
@@ -60,8 +66,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                 lock (_randglobal) seed = _randglobal.Next();
                 _rand = new Random(seed);
             }
-
-            return (float)(_rand.NextDouble() * (max - min) + min);
+            return (float)(_randglobal.NextDouble() * (max - min) + min);
         }
         static public float random()
         {
@@ -71,7 +76,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                 lock (_randglobal) seed = _randglobal.Next();
                 _rand = new Random(seed);
             }
-            return (float)_rand.NextDouble();
+            return (float)_randglobal.NextDouble();
         }
 
 
@@ -115,10 +120,13 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
             for (int _y = 0; _y < _numTilesRows; _y++) {
                 for (int _x = 0; _x < _numTilesCols; _x++){
-                    
+
+                    float r = random();
+
+                    //Console.WriteLine(r);
 
                     //Throw in a random assortment of ones and zeroes.
-                    if (random() < initWallRatio)
+                    if (r < initWallRatio)
                     {
                         mat[_y, _x] = 1;
                     }
