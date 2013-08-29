@@ -43,7 +43,9 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                     for (int j = 0; j < sizeY; j++)
                     {
                         System.Drawing.Point p = new System.Drawing.Point(i * LayerEditor.Layer.Definition.Grid.Width, j * LayerEditor.Layer.Definition.Grid.Height);
-
+                        
+                        setCell(p, false);
+                        
                         if (level[j, i] == 1)
                         {
                             setCell(p, true);
@@ -77,6 +79,8 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                     for (int j = 0; j < sizeY; j++)
                     {
                         System.Drawing.Point p = new System.Drawing.Point(i * LayerEditor.Layer.Definition.Grid.Width, j * LayerEditor.Layer.Definition.Grid.Height);
+                       
+                        setCell(p, true);
 
                         if (level[j, i] == 1)
                         {
@@ -102,7 +106,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
         public override void OnMouseRightUp(System.Drawing.Point location)
         {
-            if (drawing && !drawMode)
+            if (drawing && drawMode)
             {
                 drawing = false;
                 drawAction = null;
@@ -111,21 +115,25 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
         public override void OnMouseMove(System.Drawing.Point location)
         {
-            if (drawing)
-                setCell(location, drawMode);
+        //    if (drawing)
+        //        setCell(location, drawMode);
         }
 
         private void setCell(System.Drawing.Point location, bool setTo)
         {
             location = LayerEditor.Layer.Definition.ConvertToGrid(location);
 
-            if (!IsValidGridCell(location) || LayerEditor.Layer.Grid[location.X, location.Y] == setTo)
-                return;
+            LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
 
-            if (drawAction == null)
-                LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
-            else
-                drawAction.DoAgain(location);
+            //location = LayerEditor.Layer.Definition.ConvertToGrid(location);
+
+            //if (!IsValidGridCell(location) || LayerEditor.Layer.Grid[location.X, location.Y] == setTo)
+            //    return;
+
+            //if (drawAction == null)
+            //    LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
+            //else
+            //    drawAction.DoAgain(location);
         }
     }
 }

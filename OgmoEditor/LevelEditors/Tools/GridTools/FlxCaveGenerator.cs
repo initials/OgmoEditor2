@@ -52,9 +52,11 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
     		_numTilesCols = nCols;
 	    	_numTilesRows = nRows;
 
-            initWallRatio = random(0.4f, 0.6f);
+            //initWallRatio = random(0.4f, 0.6f);
+            initWallRatio = 0.5f;
 
-            Console.WriteLine(initWallRatio.ToString());
+
+            //Console.WriteLine(initWallRatio.ToString());
 
 
         }
@@ -77,6 +79,11 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                 _rand = new Random(seed);
             }
             return (float)_randglobal.NextDouble();
+
+            //Random r = new Random();
+
+            //return (float)r.NextDouble();
+
         }
 
 
