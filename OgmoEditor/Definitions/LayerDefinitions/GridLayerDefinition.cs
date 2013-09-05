@@ -12,7 +12,7 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 {
     public class GridLayerDefinition : LayerDefinition
     {
-        public enum ExportModes { Bitstring, TrimmedBitstring, Rectangles, GridRectangles };
+        public enum ExportModes { Bitstring, TrimmedBitstring, Rectangles, GridRectangles, CSV };
 
         public OgmoColor Color;
         public ExportModes ExportMode;

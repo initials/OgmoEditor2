@@ -51,11 +51,13 @@
             "Bitstring",
             "Trimmed Bitstring",
             "Rectangles",
-            "Grid Rectangles"});
+            "Grid Rectangles",
+            "CSV"});
             this.exportModeComboBox.Location = new System.Drawing.Point(92, 46);
             this.exportModeComboBox.Name = "exportModeComboBox";
             this.exportModeComboBox.Size = new System.Drawing.Size(121, 21);
             this.exportModeComboBox.TabIndex = 2;
+            this.exportModeComboBox.SelectedIndexChanged += new System.EventHandler(this.exportModeComboBox_SelectedIndexChanged);
             this.exportModeComboBox.SelectionChangeCommitted += new System.EventHandler(this.exportModeComboBox_SelectionChangeCommitted);
             // 
             // label2

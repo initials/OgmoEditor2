@@ -34,5 +34,10 @@ namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
         {
             def.ExportMode = (GridLayerDefinition.ExportModes)exportModeComboBox.SelectedIndex;
         }
+
+        private void exportModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

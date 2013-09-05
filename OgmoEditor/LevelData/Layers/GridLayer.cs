@@ -38,6 +38,23 @@ namespace OgmoEditor.LevelData.Layers
 
             switch (Definition.ExportMode)
             {
+                    // added this to allow for CSV export since flxTileMap uses CSV with no end comma
+                case GridLayerDefinition.ExportModes.CSV:
+                    //Bitstring export
+                    string[] rows2 = new string[Grid.GetLength(1)];
+                    for (int i = 0; i < Grid.GetLength(1); i++)
+                    {
+                        rows2[i] = "";
+                        for (int j = 0; j < Grid.GetLength(0); j++)
+                        {
+                            rows2[i] += Grid[j, i] ? "1" : "0";
+                            if (j!=Grid.GetLength(0)-1)
+                                rows2[i] += ",";
+                        }
+
+                    }
+                    xml.InnerText = string.Join("\n", rows2, 0, rows2.Length);
+                    break;
                 case GridLayerDefinition.ExportModes.Bitstring:
                 case GridLayerDefinition.ExportModes.TrimmedBitstring:
                     //Bitstring export
@@ -159,6 +176,42 @@ namespace OgmoEditor.LevelData.Layers
             //Import the XML!
             switch (exportMode)
             {
+                case GridLayerDefinition.ExportModes.CSV:
+                    //CSV import
+                    string sx = xml.InnerText;
+                    string sReplaced = sx.Replace(",", "");
+                    int x2 = 0;
+                    int y2 = 0;
+                    for (int i = 0; i < sReplaced.Length; i++)
+                    {
+                        //If the grid is bigger than it should be, something has gone wrong with the XML
+                        if (x2 >= Grid.GetLength(0) && sReplaced[i] != '\n')
+                        {
+                            cleanXML = false;
+                            while (i < sReplaced.Length && sReplaced[i] != '\n')
+                                i++;
+                            x2 = 0;
+                            y2++;
+                            continue;
+                        }
+                        else if (y2 >= Grid.GetLength(1))
+                        {
+                            cleanXML = false;
+                            break;
+                        }
+
+                        if (sReplaced[i] == '1')
+                            Grid[x2, y2] = true;
+
+                        if (sReplaced[i] == '\n')
+                        {
+                            x2 = 0;
+                            y2++;
+                        }
+                        else
+                            x2++;
+                    }
+                    break;
                 case GridLayerDefinition.ExportModes.Bitstring:
                 case GridLayerDefinition.ExportModes.TrimmedBitstring:
                     //Bitstring import
