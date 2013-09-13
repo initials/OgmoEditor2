@@ -9,6 +9,32 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 {
     public class TileCaveTool : TileTool
     {
+        /// <summary>
+        /// No auto-tiling.
+        /// </summary>
+        public const int OFF = 0;
+
+        /// <summary>
+        /// Platformer-friendly auto-tiling.
+        /// </summary>
+        public const int AUTO = 1;
+
+        /// <summary>
+        /// Top-down auto-tiling.
+        /// </summary>
+        public const int ALT = 2;
+
+
+        /// <summary>
+        /// Random pick from tilesheet
+        /// </summary>
+        public const int RANDOM = 3;
+
+        /// <summary>
+        /// Set this flag to use one of the 16-tile binary auto-tile algorithms (OFF, AUTO, or ALT).
+        /// </summary>
+        public int auto = 1;
+
         private bool drawing;
         private bool drawMode;
         private Point drawStart;
@@ -38,17 +64,17 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             if ((Index % widthInTiles <= 0) || (_data[Index - 1] > 0)) 					//LEFT
                 _data[Index] += 8;
 
-            //if ((auto == ALT) && (_data[Index] == 15))	//The alternate algo checks for interior corners
-            //{
-            //    if ((Index % widthInTiles > 0) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles - 1] <= 0))
-            //        _data[Index] = 1;		//BOTTOM LEFT OPEN
-            //    if ((Index % widthInTiles > 0) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles - 1] <= 0))
-            //        _data[Index] = 2;		//TOP LEFT OPEN
-            //    if ((Index % widthInTiles < widthInTiles - 1) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles + 1] <= 0))
-            //        _data[Index] = 4;		//TOP RIGHT OPEN
-            //    if ((Index % widthInTiles < widthInTiles - 1) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles + 1] <= 0))
-            //        _data[Index] = 8; 		//BOTTOM RIGHT OPEN
-            //}
+            if ((auto == ALT) && (_data[Index] == 15))	//The alternate algo checks for interior corners
+            {
+                if ((Index % widthInTiles > 0) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles - 1] <= 0))
+                    _data[Index] = 1;		//BOTTOM LEFT OPEN
+                if ((Index % widthInTiles > 0) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles - 1] <= 0))
+                    _data[Index] = 2;		//TOP LEFT OPEN
+                if ((Index % widthInTiles < widthInTiles - 1) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles + 1] <= 0))
+                    _data[Index] = 4;		//TOP RIGHT OPEN
+                if ((Index % widthInTiles < widthInTiles - 1) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles + 1] <= 0))
+                    _data[Index] = 8; 		//BOTTOM RIGHT OPEN
+            }
 
             _data[Index] += 1;
 
@@ -57,71 +83,13 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             //    _data[Index] += (int)(FlxU.random() * (_extraMiddleTiles + 1));
             //}
         }
-        /*
-        public void createDataSet(int[,] MapData)
+
+        public void cave()
         {
-            //Figure out the map dimensions based on the data string
-            string[] cols;
-            string[] rows = MapData.Split('\n');
-            heightInTiles = rows.Length;
-            int r = 0;
-            int c;
-
-            cols = rows[r].Split(',');
-            _data = new int[rows.Length * cols.Length];
-            while (r < heightInTiles)
+            if (true)
             {
-                cols = rows[r++].Split(',');
-                if (cols.Length <= 1)
-                {
-                    heightInTiles = heightInTiles - 1;
-                    continue;
-                }
-                if (widthInTiles == 0)
-                    widthInTiles = cols.Length;
-                c = 0;
-                while (c < widthInTiles)
-                    _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]); //.push(uint(cols[c++]));
-            }
-
-            //now that height and width have been determined, find how many extra 
-            //"filler tiles" are at the end of your map.
-
-            int standardLength = 16 * TileWidth;
-            int graphicWidth = _tileBitmap.Width;
-            _extraMiddleTiles = (graphicWidth - standardLength) / TileWidth;
-
-            //Pre-process the map data if it's auto-tiled
-            int i;
-            totalTiles = widthInTiles * heightInTiles;
-            if (auto > OFF)
-            {
-                collideIndex = startingIndex = drawIndex = 1;
-                i = 0;
-                while (i < totalTiles)
-                    autoTile(i++);
-            }
-            if (auto == RANDOM)
-            {
-                collideIndex = startingIndex = drawIndex = 1;
-                i = 0;
-                while (i < totalTiles)
-                    randomTile(i++);
-            }
-        }
-        */
-
-
-        /// <summary>
-        /// Creates a cave style level.
-        /// </summary>
-        /// <param name="location"></param>
-        public override void OnMouseLeftDown(System.Drawing.Point location)
-        {
-            if (!drawing)
-            {
-                drawing = true;
-                drawMode = true;
+                //drawing = true;
+                //drawMode = true;
 
                 int sizeX = LayerEditor.Layer.TileCellsX;
                 int sizeY = LayerEditor.Layer.TileCellsY;
@@ -132,8 +100,6 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                 int[,] level = cave.generateCaveLevel();
 
                 string MapData = cave.convertMultiArrayToString(level);
-
-                Console.WriteLine(MapData.ToString());
 
                 int heightInTiles = 0;
 
@@ -175,15 +141,15 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                     {
                         System.Drawing.Point p = new System.Drawing.Point(j * LayerEditor.Layer.Definition.Grid.Width, i * LayerEditor.Layer.Definition.Grid.Height);
 
-                        SetCaveTile(p,  -1);
+                        SetCaveTile(p, -1);
 
                         if (_data[total] >= 1)
                         {
-                            SetCaveTile(p,  _data[total] - 1  );
+                            SetCaveTile(p, _data[total] - 1);
                         }
                         else
                         {
-                            SetCaveTile(p,  -1);
+                            SetCaveTile(p, -1);
                         }
                         total++;
                     }
@@ -191,15 +157,16 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             }
         }
 
+        public override void OnMouseLeftDown(System.Drawing.Point location)
+        {
+            auto = AUTO;
+            cave();
+        }
+
         public override void OnMouseRightDown(Point location)
         {
-            if (!drawing)
-            {
-                drawing = true;
-                drawMode = false;
-
-                SetTiles(location, null);
-            }
+            auto = ALT;
+            cave();
         }
 
         public override void OnMouseLeftUp(Point location)
