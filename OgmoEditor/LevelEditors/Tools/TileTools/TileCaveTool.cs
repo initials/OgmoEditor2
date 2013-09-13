@@ -43,7 +43,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         public int widthInTiles;
 
         public TileCaveTool()
-            : base("Cave", "cave.png")
+            : base("Cave\nLeft click for AUTO\nRight click for ALT", "cave.png")
         {
             drawing = false;
         }

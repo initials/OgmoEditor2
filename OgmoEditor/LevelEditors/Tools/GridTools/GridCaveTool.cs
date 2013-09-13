@@ -14,7 +14,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
         private GridDrawAction drawAction;
 
         public GridCaveTool()
-            : base("Cave", "cave.png")
+            : base("Cave\nLeft click for regular\nRight click for inverse.", "cave.png")
         {
             drawing = false;
         }
