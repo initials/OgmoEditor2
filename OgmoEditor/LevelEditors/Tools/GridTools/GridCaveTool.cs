@@ -115,8 +115,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
         public override void OnMouseMove(System.Drawing.Point location)
         {
-        //    if (drawing)
-        //        setCell(location, drawMode);
         }
 
         private void setCell(System.Drawing.Point location, bool setTo)
@@ -125,15 +123,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
             LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
 
-            //location = LayerEditor.Layer.Definition.ConvertToGrid(location);
-
-            //if (!IsValidGridCell(location) || LayerEditor.Layer.Grid[location.X, location.Y] == setTo)
-            //    return;
-
-            //if (drawAction == null)
-            //    LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
-            //else
-            //    drawAction.DoAgain(location);
         }
     }
 }

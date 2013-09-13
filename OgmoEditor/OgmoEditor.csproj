@@ -214,6 +214,7 @@
     <Compile Include="LevelEditors\Tools\GridTools\GridRectangleTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntityPlacementTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridSelectionTool.cs" />
+    <Compile Include="LevelEditors\Tools\GridTools\GridSmoothTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileCaveTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileEyedropperTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileFloodTool.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="LevelEditors\Tools\TileTools\TilePencilTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileRectangleTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileSelectionTool.cs" />
+    <Compile Include="LevelEditors\Tools\TileTools\TileSmoothTool.cs" />
     <Compile Include="LevelEditors\ValueEditors\BoolValueEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -278,6 +280,12 @@
     </Compile>
     <Compile Include="Windows\EntitySelectionWindow.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\LayerButton.cs">
       <SubType>UserControl</SubType>
@@ -720,6 +728,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\tools\selection.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tools\smooth.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="icon32.ico" />

@@ -35,8 +35,6 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         /// </summary>
         public int auto = 1;
 
-        private bool drawing;
-        private bool drawMode;
         private Point drawStart;
         private TileDrawAction drawAction;
         private int[] _data;
@@ -45,11 +43,10 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         public TileCaveTool()
             : base("Cave\nLeft click for AUTO\nRight click for ALT", "cave.png")
         {
-            drawing = false;
         }
 
        
-        protected void autoTile(int Index)
+        public void autoTile(int Index)
         {
             int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
 
@@ -124,7 +121,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                         widthInTiles = cols.Length;
                     c = 0;
                     while (c < widthInTiles)
-                        _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]); //.push(uint(cols[c++]));
+                        _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]);
                 }
 
                 int total = 0;
@@ -135,11 +132,11 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                     autoTile(ii++);
 
                 total = 0;
-                for (int i = 0; i < sizeY; i++)
+                for (int y = 0; y < sizeY; y++)
                 {
-                    for (int j = 0; j < sizeX; j++)
+                    for (int x = 0; x < sizeX; x++)
                     {
-                        System.Drawing.Point p = new System.Drawing.Point(j * LayerEditor.Layer.Definition.Grid.Width, i * LayerEditor.Layer.Definition.Grid.Height);
+                        System.Drawing.Point p = new System.Drawing.Point(x * LayerEditor.Layer.Definition.Grid.Width, y * LayerEditor.Layer.Definition.Grid.Height);
 
                         SetCaveTile(p, -1);
 
@@ -171,26 +168,14 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
         public override void OnMouseLeftUp(Point location)
         {
-            if (drawing && drawMode)
-            {
-                drawing = false;
-                drawAction = null;
-            }
         }
 
         public override void OnMouseRightUp(Point location)
         {
-            if (drawing && !drawMode)
-            {
-                drawing = false;
-                drawAction = null;
-            }
         }
 
         public override void OnMouseMove(Point location)
         {
-            if (drawing)
-                SetTiles(location, drawMode ? Ogmo.TilePaletteWindow.Tiles : null);
         }
 
         private void SetCaveTile(System.Drawing.Point location, int setTo)

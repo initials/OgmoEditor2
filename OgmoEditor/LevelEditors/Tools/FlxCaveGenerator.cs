@@ -84,11 +84,28 @@ namespace OgmoEditor.LevelEditors.Tools
                 {
                     mat[_y, _x] = 0;
                 }
-
             }
 
             return mat;
         }
+
+
+        public int[,] smoothLevel(int[,] mat)
+        {
+            int[,] mat2 = genInitMatrix(_numTilesRows, _numTilesCols);
+
+            // Run automata
+
+            runCelluarAutomata(mat, mat2);
+
+            int[,] temp = new int[mat.GetLength(0), mat.GetLength(1)];
+            mat = mat2;
+            mat2 = temp;
+            
+            return mat;
+        }
+
+
 
         /// <summary>
         /// Generates a completely random set of 1s and 0s.
