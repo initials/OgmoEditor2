@@ -75,81 +75,80 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
             _data[Index] += 1;
 
-            //if (_extraMiddleTiles >= 1 && _data[Index] == 16)
-            //{
-            //    _data[Index] += (int)(FlxU.random() * (_extraMiddleTiles + 1));
-            //}
+
+            //extra part for if you have extra tiles.
+
+            int _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
+
+            if (_extraMiddleTiles >= 16 && _data[Index] == 16)
+            {
+                _data[Index] += ( (int)(FlxCaveGenerator.random(16, _extraMiddleTiles + 1)) - 16);
+            }
         }
 
         public void cave()
         {
-            if (true)
+            int sizeX = LayerEditor.Layer.TileCellsX;
+            int sizeY = LayerEditor.Layer.TileCellsY;
+
+            FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY);
+            cave.genInitMatrix(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY);
+
+            int[,] level = cave.generateCaveLevel();
+
+            string MapData = cave.convertMultiArrayToString(level);
+
+            int heightInTiles = 0;
+
+            //Figure out the map dimensions based on the data string
+            string[] cols;
+            string[] rows = MapData.Split('\n');
+            heightInTiles = rows.Length;
+            int r = 0;
+            int c;
+
+            cols = rows[r].Split(',');
+            _data = new int[rows.Length * cols.Length];
+            while (r < heightInTiles)
             {
-                //drawing = true;
-                //drawMode = true;
-
-                int sizeX = LayerEditor.Layer.TileCellsX;
-                int sizeY = LayerEditor.Layer.TileCellsY;
-
-                FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY);
-                cave.genInitMatrix(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY);
-
-                int[,] level = cave.generateCaveLevel();
-
-                string MapData = cave.convertMultiArrayToString(level);
-
-                int heightInTiles = 0;
-
-                //Figure out the map dimensions based on the data string
-                string[] cols;
-                string[] rows = MapData.Split('\n');
-                heightInTiles = rows.Length;
-                int r = 0;
-                int c;
-
-                cols = rows[r].Split(',');
-                _data = new int[rows.Length * cols.Length];
-                while (r < heightInTiles)
+                cols = rows[r++].Split(',');
+                if (cols.Length <= 1)
                 {
-                    cols = rows[r++].Split(',');
-                    if (cols.Length <= 1)
-                    {
-                        heightInTiles = heightInTiles - 1;
-                        continue;
-                    }
-                    if (widthInTiles == 0)
-                        widthInTiles = cols.Length;
-                    c = 0;
-                    while (c < widthInTiles)
-                        _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]);
+                    heightInTiles = heightInTiles - 1;
+                    continue;
                 }
+                if (widthInTiles == 0)
+                    widthInTiles = cols.Length;
+                c = 0;
+                while (c < widthInTiles)
+                    _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]);
+            }
 
-                int total = 0;
-                int ii = 0;
-                int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
+            int total = 0;
+            int ii = 0;
+            int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
 
-                while (ii < totalTiles)
-                    autoTile(ii++);
+            while (ii < totalTiles)
+                autoTile(ii++);
 
-                total = 0;
-                for (int y = 0; y < sizeY; y++)
+            total = 0;
+            for (int y = 0; y < sizeY; y++)
+            {
+                for (int x = 0; x < sizeX; x++)
                 {
-                    for (int x = 0; x < sizeX; x++)
+                    System.Drawing.Point p = new System.Drawing.Point(x * LayerEditor.Layer.Definition.Grid.Width, y * LayerEditor.Layer.Definition.Grid.Height);
+
+                    SetCaveTile(p, -1);
+
+                    if (_data[total] >= 1)
                     {
-                        System.Drawing.Point p = new System.Drawing.Point(x * LayerEditor.Layer.Definition.Grid.Width, y * LayerEditor.Layer.Definition.Grid.Height);
-
-                        SetCaveTile(p, -1);
-
-                        if (_data[total] >= 1)
-                        {
-                            SetCaveTile(p, _data[total] - 1);
-                        }
-                        else
-                        {
-                            SetCaveTile(p, -1);
-                        }
-                        total++;
+                        SetCaveTile(p, _data[total] - 1);
                     }
+                    else
+                    {
+                        SetCaveTile(p, -1);
+                    }
+                    total++;
                 }
             }
         }
