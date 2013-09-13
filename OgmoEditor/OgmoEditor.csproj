@@ -205,7 +205,7 @@
     <Compile Include="LevelEditors\Tools\EntityTools\EntityMoveTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntityResizeTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntitySelectionTool.cs" />
-    <Compile Include="LevelEditors\Tools\GridTools\FlxCaveGenerator.cs" />
+    <Compile Include="LevelEditors\Tools\FlxCaveGenerator.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridCaveTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridFloodTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridLineTool.cs" />
@@ -214,6 +214,7 @@
     <Compile Include="LevelEditors\Tools\GridTools\GridRectangleTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntityPlacementTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridSelectionTool.cs" />
+    <Compile Include="LevelEditors\Tools\TileTools\TileCaveTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileEyedropperTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileFloodTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileLineTool.cs" />

@@ -5,7 +5,7 @@ using System.Linq;
 
 using OgmoEditor.LevelEditors.Actions.GridActions;
 
-namespace OgmoEditor.LevelEditors.Tools.GridTools
+namespace OgmoEditor.LevelEditors.Tools
 {
 
     /// <summary>
@@ -16,20 +16,12 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
     /// </summary>
     public class FlxCaveGenerator
     {
-
-        //@benbaird Replacement for AS3's Math.random() method
-        /// <summary>
-        /// Replacement for AS3's Math.random() method
-        /// </summary>
         private static Random _randglobal = new Random();
         [ThreadStatic]
         private static Random _rand;
 
-
-
         static public int _numTilesCols = 50;
 	    static public int _numTilesRows = 50;
-
 
         /// <summary>
         /// How many times do you want to "smooth" the cave.
@@ -43,8 +35,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
         /// Values 0-1.
         /// </summary>
 	    public float initWallRatio = 0.5f;
-
-
+        
         public FlxCaveGenerator(int nCols, int nRows)
         {
             _rand = null;
@@ -52,12 +43,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
     		_numTilesCols = nCols;
 	    	_numTilesRows = nRows;
 
-            //initWallRatio = random(0.4f, 0.6f);
             initWallRatio = 0.5f;
-
-
-            //Console.WriteLine(initWallRatio.ToString());
-
 
         }
         static public float random(double min, double max)
@@ -79,14 +65,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                 _rand = new Random(seed);
             }
             return (float)_randglobal.NextDouble();
-
-            //Random r = new Random();
-
-            //return (float)r.NextDouble();
-
         }
-
-
 
         /// <summary>
         /// Generate a matrix of zeroes.
@@ -125,12 +104,12 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
             int floor = _numTilesRows - 2;
 
-            for (int _y = 0; _y < _numTilesRows; _y++) {
-                for (int _x = 0; _x < _numTilesCols; _x++){
+            for (int _y = 0; _y < _numTilesRows; _y++) 
+            {
+                for (int _x = 0; _x < _numTilesCols; _x++)
+                {
 
                     float r = random();
-
-                    //Console.WriteLine(r);
 
                     //Throw in a random assortment of ones and zeroes.
                     if (r < initWallRatio)
@@ -151,15 +130,12 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
             for (int i = 0; i <= numSmoothingIterations; i++)
             {
-
                 runCelluarAutomata(mat, mat2);
 
                 int[,] temp = new int[mat.GetLength(0), mat.GetLength(1)];
                 mat = mat2;
                 mat2 = temp;
-
             }
-
             return mat;
         }
 
@@ -359,9 +335,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                     mat[_i, _xSolid] = 1;
                 }
             }
-
-
-
             return mat;
         }
 
@@ -428,17 +401,12 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                             }
                         }
                     }
-
-
-
                     if (solidRowsBeforeSmooth != null)
                     {
                         foreach (int _ySolid in solidRowsBeforeSmooth)
                         {
                             for (int _i = 0; _i < _numTilesRows; ++_i)
                             {
-                                
-
                                 mat[_ySolid, _i] = 1;
                             }
                         }
@@ -493,9 +461,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                     }
                 }
             }
-
-
-
             foreach (int _ySolid in solidRowsAfterSmooth)
             {
                 for (int _i = 0; _i < _numTilesRows; ++_i)
@@ -510,9 +475,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                     mat[_i, _xSolid] = 1;
                 }
             }
-
-
-
             return mat;
         }
 
@@ -561,13 +523,10 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
         {
             int count = 0;
 
-            //var numbers = Enumerable.Range(-dist , dist + 1);
-
             for ( int _y = -dist; _y <= dist; ++_y )
 			{
 				for ( int _x = -dist; _x <= dist; ++_x )
 				{
-
                     // Boundary
                     if ( xPos + _x < 0 || xPos + _x > _numTilesCols - 1 || yPos + _y < 0 || yPos + _y > _numTilesRows - 1 )
                     {
@@ -577,7 +536,6 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
                     // Neighbor is non-wall
                     if (mat[yPos + _y, xPos + _x] != 0)
                         count += 1;
-
                 }
             }
 
@@ -736,6 +694,29 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
             return newMap;
 
         }
+
+        public int[] convertMultiArrayToArray(int[,] multiArray)
+        {
+            int total = multiArray.GetLength(0) * multiArray.GetLength(1);
+
+            int[] newMap = new int[total];
+            int count = 0;
+
+            for (int i = 0; i < multiArray.GetLength(1); i++)
+            {
+                for (int j = 0; j < multiArray.GetLength(0); j++)
+                {
+                    newMap[count] = multiArray[j,i];
+
+                    count++;
+
+                }
+                //newMap += "\n";
+            }
+            return newMap;
+
+        }
+
 
         /// <summary>
         /// Generates a set of ladders going vertically.
