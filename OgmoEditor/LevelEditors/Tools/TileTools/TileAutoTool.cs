@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Tools.TileTools
 {
-    public class TileSmoothTool : TileTool
+    public class TileAutoTool : TileTool
     {
         private TileDrawAction drawAction;
         private int[] _data;
@@ -33,8 +33,8 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         /// </summary>
         public int auto = 1;
 
-        public TileSmoothTool()
-            : base("Smooth", "smooth.png")
+        public TileAutoTool()
+            : base("Auto Tile", "autotile.png")
         {
         }
 
@@ -90,14 +90,14 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             {
                 for (int x = 0; x < sizeX; x++)
                 {
-                    if (LayerEditor.Layer.Tiles[x,y] == -1)
-                        level[y,x] = 0;
+                    if (LayerEditor.Layer.Tiles[x, y] == -1)
+                        level[y, x] = 0;
                     else
-                        level[y,x] = 1;
+                        level[y, x] = 1;
                 }
             }
 
-            level = cave.smoothLevel(level);
+            //level = cave.smoothLevel(level);
 
             string MapData = cave.convertMultiArrayToString(level);
 
@@ -124,7 +124,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                     widthInTiles = cols.Length;
                 c = 0;
                 while (c < widthInTiles)
-                    _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]); 
+                    _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]);
             }
 
             int total = 0;

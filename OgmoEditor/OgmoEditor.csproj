@@ -215,6 +215,7 @@
     <Compile Include="LevelEditors\Tools\EntityTools\EntityPlacementTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridSelectionTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridSmoothTool.cs" />
+    <Compile Include="LevelEditors\Tools\TileTools\TileAutoTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileCaveTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileEyedropperTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileFloodTool.cs" />
@@ -692,6 +693,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\tools\addNode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tools\autotile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\tools\cave.png">

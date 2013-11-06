@@ -31,7 +31,7 @@ namespace OgmoEditor.Windows
             //Initialize the tool lists
             toolsForLayerTypes = new Dictionary<Type, Tool[]>();
             toolsForLayerTypes.Add(typeof(GridLayerDefinition), new Tool[] { new GridPencilTool(), new GridFloodTool(), new GridRectangleTool(), new GridLineTool(), new GridSelectionTool(), new GridMoveSelectionTool(), new GridCaveTool(), new GridSmoothTool() });
-            toolsForLayerTypes.Add(typeof(TileLayerDefinition), new Tool[] { new TilePencilTool(), new TileEyedropperTool(), new TileFloodTool(), new TileRectangleTool(), new TileLineTool(), new TileSelectionTool(), new TileMoveSelectionTool(), new TileCaveTool(), new TileSmoothTool() });
+            toolsForLayerTypes.Add(typeof(TileLayerDefinition), new Tool[] { new TilePencilTool(), new TileEyedropperTool(), new TileFloodTool(), new TileRectangleTool(), new TileLineTool(), new TileSelectionTool(), new TileMoveSelectionTool(), new TileCaveTool(), new TileSmoothTool(), new TileAutoTool() });
             toolsForLayerTypes.Add(typeof(EntityLayerDefinition), new Tool[] { new EntityPlacementTool(), new EntityEraseTool(), new EntitySelectionTool(), new EntityMoveTool(), new EntityResizeTool(), new EntityAddNodeTool(), new EntityInsertNodeTool() });
 
             //Events
