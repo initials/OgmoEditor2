@@ -206,6 +206,7 @@
     <Compile Include="LevelEditors\Tools\EntityTools\EntityResizeTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntitySelectionTool.cs" />
     <Compile Include="LevelEditors\Tools\FlxCaveGenerator.cs" />
+    <Compile Include="LevelEditors\Tools\FlxCaveGeneratorExt.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridCaveTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridFloodTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridLineTool.cs" />
