@@ -34,7 +34,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         public int auto = 1;
 
         public TileAutoTool()
-            : base("Auto Tile", "autotile.png")
+            : base("Auto Tile.\nRight=AUTO\nLeft=ALT\nShift+Right=AUTO-Customized\nShift+Left=ALT-Customized", "autotile.png")
         {
         }
 
@@ -116,23 +116,44 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             }
 
             //remap to custom
+            if (auto != ALT){
+                if (_data[Index] == 1) { _data[Index] = 4;  }           // FIX
+                else if (_data[Index] == 2) { _data[Index] = 4;  }      // FIX
+                else if (_data[Index] == 3) { _data[Index] = 5; }       // FIX
+                else if (_data[Index] == 4){ _data[Index] = 129; }      // |_
+                else if (_data[Index] == 5) { _data[Index] = 4; }       // FIX
+                else if (_data[Index] == 6) { _data[Index] = 5; }       // FIX
+                else if (_data[Index] == 7){ _data[Index] = 9;}         // |^
+                else if (_data[Index] == 8) { _data[Index] = 29; }      // |=
+                else if (_data[Index] == 9) { _data[Index] = 4; }       // FIX
+                else if (_data[Index] == 10){ _data[Index] = 135;}      // _|
+                else if (_data[Index] == 11) { _data[Index] = 5; }      // FIX
+                else if (_data[Index] == 12) { _data[Index] = 130; }    // _
+                else if (_data[Index] == 13){ _data[Index] = 15;}       // ^|
+                else if (_data[Index] == 14) { _data[Index] = 35; }     // =|
+                else if (_data[Index] == 15) { _data[Index] = 10; }     // ^
+                else if (_data[Index] >= 16){_data[Index] = 195; }      // Empty
+            }
+            else // is ALT
+            {
+                if (_data[Index] == 1) { _data[Index] = 4; }            // FIX
+                else if (_data[Index] == 2) { _data[Index] = 17; }      //      //BOTTOM LEFT OPEN
+                else if (_data[Index] == 3) { _data[Index] = 37; }      //      //TOP LEFT OPEN
+                else if (_data[Index] == 4) { _data[Index] = 129; }     // |_
+                else if (_data[Index] == 5) { _data[Index] = 36; }      //      //TOP RIGHT OPEN
+                else if (_data[Index] == 6) { _data[Index] = 5; }       // FIX
+                else if (_data[Index] == 7) { _data[Index] = 9; }       // |^
+                else if (_data[Index] == 8) { _data[Index] = 29; }      // |=
+                else if (_data[Index] == 9) { _data[Index] = 16; }      //      //BOTTOM RIGHT OPEN
+                else if (_data[Index] == 10) { _data[Index] = 135; }    // _|
+                else if (_data[Index] == 11) { _data[Index] = 5; }      // FIX
+                else if (_data[Index] == 12) { _data[Index] = 130; }    // _
+                else if (_data[Index] == 13) { _data[Index] = 15; }     // ^|
+                else if (_data[Index] == 14) { _data[Index] = 35; }     // =|
+                else if (_data[Index] == 15) { _data[Index] = 10; }     // ^
+                else if (_data[Index] >= 16) { _data[Index] = 195; }    // Empty
+            }
 
-            if (_data[Index] == 1) { }
-            else if (_data[Index] == 2) { _data[Index] = 4;  } // FIX
-            else if (_data[Index] == 3) { _data[Index] = 5; } // FIX
-            else if (_data[Index] == 4){ _data[Index] = 129; } // |_
-            else if (_data[Index] == 5) { _data[Index] = 4; }// FIX
-            else if (_data[Index] == 6) { _data[Index] = 5; }// FIX
-            else if (_data[Index] == 7){ _data[Index] = 9;} // |^
-            else if (_data[Index] == 8) { _data[Index] = 29; } // |=
-            else if (_data[Index] == 9) { _data[Index] = 4; }// FIX
-            else if (_data[Index] == 10){ _data[Index] = 135;} // _|
-            else if (_data[Index] == 11) { _data[Index] = 5; }// FIX
-            else if (_data[Index] == 12) { _data[Index] = 130; } //
-            else if (_data[Index] == 13){ _data[Index] = 15;} // ^|
-            else if (_data[Index] == 14) { _data[Index] = 35; } // =|
-            else if (_data[Index] == 15) { _data[Index] = 10; } // ^
-            else if (_data[Index] >= 16){_data[Index] = 195; } // Empty
         }
 
         public void cave()
@@ -245,8 +266,16 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
         public override void OnMouseRightDown(Point location)
         {
-            auto = ALT;
-            cave();
+            if (Util.Shift)
+            {
+                auto = ALT;
+                cave(true);
+            }
+            else
+            {
+                auto = ALT;
+                cave();
+            }
         }
 
         public override void OnMouseMiddleClick(Point location)
