@@ -30,6 +30,8 @@ namespace OgmoEditor.LevelEditors.Tools
         public virtual void OnMouseRightUp(Point location) { }
         public virtual void OnMouseMove(Point location) { }
 
+        public virtual void OnMouseMiddleClick(Point location) { }
+
         public LevelEditor LevelEditor
         {
             get { return Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex]; }

@@ -504,6 +504,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LevelEditors\LevelProperties.resx">
       <DependentUpon>LevelProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="LevelEditors\LevelValueEditors\LevelBoolValueEditor.resx">
       <DependentUpon>LevelBoolValueEditor.cs</DependentUpon>
@@ -546,12 +547,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\EntitySelectionImage.resx">
       <DependentUpon>EntitySelectionImage.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\LayerButton.resx">
       <DependentUpon>LayerButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectEditors\LayerDefinitionEditors\GridLayerDefinitionEditor.resx">
       <DependentUpon>GridLayerDefinitionEditor.cs</DependentUpon>
@@ -611,15 +614,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\StartPage.resx">
       <DependentUpon>StartPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\TileSelector.resx">
       <DependentUpon>TileSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\ToolButton.resx">
       <DependentUpon>ToolButton.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Utilities\ShiftRenameLevelsWindow.resx">
       <DependentUpon>ShiftRenameLevelsWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Utilities\ResaveLevelsWindow.resx">
       <DependentUpon>ResaveLevelsWindow.cs</DependentUpon>

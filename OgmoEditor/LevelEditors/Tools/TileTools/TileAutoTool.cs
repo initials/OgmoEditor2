@@ -77,7 +77,70 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             }
         }
 
+        public void customAutoTile(int Index)
+        {
+            int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
+
+            if (_data[Index] == 0) return;
+            _data[Index] = 0;
+            if ((Index - widthInTiles < 0) || (_data[Index - widthInTiles] > 0)) 		//UP
+                _data[Index] += 1;
+            if ((Index % widthInTiles >= widthInTiles - 1) || (_data[Index + 1] > 0)) 		//RIGHT
+                _data[Index] += 2;
+            if ((Index + widthInTiles >= totalTiles) || (_data[Index + widthInTiles] > 0)) //DOWN
+                _data[Index] += 4;
+            if ((Index % widthInTiles <= 0) || (_data[Index - 1] > 0)) 					//LEFT
+                _data[Index] += 8;
+
+            if ((auto == ALT) && (_data[Index] == 15))	//The alternate algo checks for interior corners
+            {
+                if ((Index % widthInTiles > 0) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles - 1] <= 0))
+                    _data[Index] = 1;		//BOTTOM LEFT OPEN
+                if ((Index % widthInTiles > 0) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles - 1] <= 0))
+                    _data[Index] = 2;		//TOP LEFT OPEN
+                if ((Index % widthInTiles < widthInTiles - 1) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles + 1] <= 0))
+                    _data[Index] = 4;		//TOP RIGHT OPEN
+                if ((Index % widthInTiles < widthInTiles - 1) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles + 1] <= 0))
+                    _data[Index] = 8; 		//BOTTOM RIGHT OPEN
+            }
+
+            _data[Index] += 1;
+
+            //extra part for if you have extra tiles.
+
+            int _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
+
+            if (_extraMiddleTiles >= 16 && _data[Index] == 16)
+            {
+                _data[Index] += ((int)(FlxCaveGenerator.random(16, _extraMiddleTiles + 1)) - 16);
+            }
+
+            //remap to custom
+
+            if (_data[Index] == 1) { }
+            else if (_data[Index] == 2) { _data[Index] = 4;  } // FIX
+            else if (_data[Index] == 3) { _data[Index] = 5; } // FIX
+            else if (_data[Index] == 4){ _data[Index] = 129; } // |_
+            else if (_data[Index] == 5) { _data[Index] = 4; }// FIX
+            else if (_data[Index] == 6) { _data[Index] = 5; }// FIX
+            else if (_data[Index] == 7){ _data[Index] = 9;} // |^
+            else if (_data[Index] == 8) { _data[Index] = 29; } // |=
+            else if (_data[Index] == 9) { _data[Index] = 4; }// FIX
+            else if (_data[Index] == 10){ _data[Index] = 135;} // _|
+            else if (_data[Index] == 11) { _data[Index] = 5; }// FIX
+            else if (_data[Index] == 12) { _data[Index] = 130; } //
+            else if (_data[Index] == 13){ _data[Index] = 15;} // ^|
+            else if (_data[Index] == 14) { _data[Index] = 35; } // =|
+            else if (_data[Index] == 15) { _data[Index] = 10; } // ^
+            else if (_data[Index] >= 16){_data[Index] = 195; } // Empty
+        }
+
         public void cave()
+        {
+            cave(false);
+        }
+
+        public void cave(bool custom=false)
         {
             int sizeX = LayerEditor.Layer.TileCellsX;
             int sizeY = LayerEditor.Layer.TileCellsY;
@@ -132,7 +195,16 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
 
             while (ii < totalTiles)
-                autoTile(ii++);
+            {
+                if (custom)
+                {
+                    customAutoTile(ii++);
+                }
+                else
+                {
+                    autoTile(ii++);
+                }
+            }
 
             total = 0;
 
@@ -159,14 +231,27 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
         public override void OnMouseLeftDown(System.Drawing.Point location)
         {
-            auto = AUTO;
-            cave();
+            if (Util.Shift)
+            {
+                auto = AUTO;
+                cave(true);
+            }
+            else
+            {
+                auto = AUTO;
+                cave();
+            }
         }
 
         public override void OnMouseRightDown(Point location)
         {
             auto = ALT;
             cave();
+        }
+
+        public override void OnMouseMiddleClick(Point location)
+        {
+            
         }
 
         public override void OnMouseLeftUp(Point location)
