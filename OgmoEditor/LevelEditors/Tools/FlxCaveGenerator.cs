@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+
 using OgmoEditor.LevelEditors.Actions.GridActions;
 
 namespace OgmoEditor.LevelEditors.Tools
@@ -46,6 +47,17 @@ namespace OgmoEditor.LevelEditors.Tools
             initWallRatio = 0.5f;
 
         }
+        public FlxCaveGenerator(int nCols, int nRows, float nInitWallRatio)
+        {
+            _rand = null;
+
+            _numTilesCols = nCols;
+            _numTilesRows = nRows;
+
+            initWallRatio = nInitWallRatio;
+
+        }
+
         static public float random(double min, double max)
         {
             if (_rand == null)

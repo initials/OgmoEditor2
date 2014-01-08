@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using OgmoEditor.LevelEditors.Actions.TileActions;
 using System.Drawing;
 
@@ -39,6 +40,8 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         private TileDrawAction drawAction;
         private int[] _data;
         public int widthInTiles;
+
+        //private float initialRandomGen = 0.5f;
 
         public TileCaveTool()
             : base("Cave\nLeft click for AUTO\nRight click for ALT", "cave.png")
@@ -91,7 +94,11 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             int sizeX = LayerEditor.Layer.TileCellsX;
             int sizeY = LayerEditor.Layer.TileCellsY;
 
-            FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY);
+            float initWall = Convert.ToSingle( Ogmo.CaveWindow.initWalls.Text);
+
+            //if (Util.One) initWall -= 0.1f;
+
+            FlxCaveGenerator cave = new FlxCaveGenerator(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY, initWall);
             cave.genInitMatrix(LayerEditor.Layer.TileCellsX, LayerEditor.Layer.TileCellsY);
 
             int[,] level = cave.generateCaveLevel();

@@ -274,6 +274,9 @@
     <Compile Include="Windows\AboutWindow.Designer.cs">
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CaveWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\EntitySelectionImage.cs">
       <SubType>UserControl</SubType>
     </Compile>

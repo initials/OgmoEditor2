@@ -38,6 +38,7 @@ namespace OgmoEditor
         static public MainWindow MainWindow { get; private set; }
         static public ToolsWindow ToolsWindow { get; private set; }
         static public LayersWindow LayersWindow { get; private set; }
+        static public CaveWindow CaveWindow { get; private set; }
         static public TilePaletteWindow TilePaletteWindow { get; private set; }
         static public EntitiesWindow EntitiesWindow { get; private set; }
         static public EntitySelectionWindow EntitySelectionWindow { get; private set; }
@@ -89,17 +90,19 @@ namespace OgmoEditor
             MainWindow = new MainWindow();
             MainWindow.Shown += new EventHandler(MainWindow_Shown);
             LayersWindow = new LayersWindow();
+            CaveWindow = new CaveWindow();
             ToolsWindow = new ToolsWindow();
             TilePaletteWindow = new TilePaletteWindow();
             EntitiesWindow = new EntitiesWindow();
             EntitySelectionWindow = new EntitySelectionWindow();
 
             LayersWindow.Show(MainWindow);
+            CaveWindow.Show(MainWindow);
             ToolsWindow.Show(MainWindow);
             TilePaletteWindow.Show(MainWindow);
             EntitiesWindow.Show(MainWindow);
             EntitySelectionWindow.Show(MainWindow);
-            LayersWindow.EditorVisible = ToolsWindow.EditorVisible = TilePaletteWindow.EditorVisible = EntitiesWindow.EditorVisible = EntitySelectionWindow.EditorVisible = false;
+            CaveWindow.EditorVisible = LayersWindow.EditorVisible = ToolsWindow.EditorVisible = TilePaletteWindow.EditorVisible = EntitiesWindow.EditorVisible = EntitySelectionWindow.EditorVisible = false;
 
             //Add the exit event
             Application.ApplicationExit += onApplicationExit;
