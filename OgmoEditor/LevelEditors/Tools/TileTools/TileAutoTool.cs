@@ -29,6 +29,12 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         public const int RANDOM = 3;
 
         /// <summary>
+        /// Square block.
+        /// </summary>
+        public const int SQUARE = 4;
+
+
+        /// <summary>
         /// Set this flag to use one of the 16-tile binary auto-tile algorithms (OFF, AUTO, or ALT).
         /// </summary>
         public int auto = 1;
@@ -76,6 +82,78 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                 _data[Index] += ((int)(FlxCaveGenerator.random(16, _extraMiddleTiles + 1)) - 16);
             }
         }
+
+        public void squareAutoTile(int Index)
+        {
+            int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
+
+            if (_data[Index] == 0) return;
+            _data[Index] = 0;
+            if ((Index - widthInTiles < 0) || (_data[Index - widthInTiles] > 0)) 		//UP
+                _data[Index] += 1;
+            if ((Index % widthInTiles >= widthInTiles - 1) || (_data[Index + 1] > 0)) 		//RIGHT
+                _data[Index] += 2;
+            if ((Index + widthInTiles >= totalTiles) || (_data[Index + widthInTiles] > 0)) //DOWN
+                _data[Index] += 4;
+            if ((Index % widthInTiles <= 0) || (_data[Index - 1] > 0)) 					//LEFT
+                _data[Index] += 8;
+
+            if ((auto == ALT) && (_data[Index] == 15))	//The alternate algo checks for interior corners
+            {
+                if ((Index % widthInTiles > 0) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles - 1] <= 0))
+                    _data[Index] = 1;		//BOTTOM LEFT OPEN
+                if ((Index % widthInTiles > 0) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles - 1] <= 0))
+                    _data[Index] = 2;		//TOP LEFT OPEN
+                if ((Index % widthInTiles < widthInTiles - 1) && (Index - widthInTiles >= 0) && (_data[Index - widthInTiles + 1] <= 0))
+                    _data[Index] = 4;		//TOP RIGHT OPEN
+                if ((Index % widthInTiles < widthInTiles - 1) && (Index + widthInTiles < totalTiles) && (_data[Index + widthInTiles + 1] <= 0))
+                    _data[Index] = 8; 		//BOTTOM RIGHT OPEN
+            }
+
+            _data[Index] += 1;
+
+            //remap to custom
+            if (auto != ALT)
+            {
+                if (_data[Index] == 1) { _data[Index] = 23; }           // FIX
+                else if (_data[Index] == 2) { _data[Index] = 31; }      // |_|
+                else if (_data[Index] == 3) { _data[Index] = 22; }       // C
+                else if (_data[Index] == 4) { _data[Index] = 25; }      // |_ 25 or 34
+                else if (_data[Index] == 5) { _data[Index] = 15; }       // |'|
+                else if (_data[Index] == 6) { _data[Index] = 8; }       // FIX
+                else if (_data[Index] == 7) { _data[Index] = 2; }         // |^ 2 or 9
+                else if (_data[Index] == 8) { _data[Index] = 17; }      // | --
+                else if (_data[Index] == 9) { _data[Index] = 24; }       // =]
+                else if (_data[Index] == 10) { _data[Index] = 29; }      // _| 29 or 36
+                else if (_data[Index] == 11) { _data[Index] = 6; }      // FIX
+                else if (_data[Index] == 12) { _data[Index] = 35; }    // _
+                else if (_data[Index] == 13) { _data[Index] = 4; }       // ^| 4 or 13
+                else if (_data[Index] == 14) { _data[Index] = 21; }     // =|
+                else if (_data[Index] == 15) { _data[Index] = 3; }     // ^
+                else if (_data[Index] >= 16) { _data[Index] = 19; }      // Empty
+            }
+            else // is ALT
+            {
+                if (_data[Index] == 1) { _data[Index] = 4; }            // FIX
+                else if (_data[Index] == 2) { _data[Index] = 17; }      //      //BOTTOM LEFT OPEN
+                else if (_data[Index] == 3) { _data[Index] = 37; }      //      //TOP LEFT OPEN
+                else if (_data[Index] == 4) { _data[Index] = 129; }     // |_
+                else if (_data[Index] == 5) { _data[Index] = 36; }      //      //TOP RIGHT OPEN
+                else if (_data[Index] == 6) { _data[Index] = 5; }       // FIX
+                else if (_data[Index] == 7) { _data[Index] = 9; }       // |^
+                else if (_data[Index] == 8) { _data[Index] = 29; }      // |=
+                else if (_data[Index] == 9) { _data[Index] = 16; }      //      //BOTTOM RIGHT OPEN
+                else if (_data[Index] == 10) { _data[Index] = 135; }    // _|
+                else if (_data[Index] == 11) { _data[Index] = 5; }      // FIX
+                else if (_data[Index] == 12) { _data[Index] = 130; }    // _
+                else if (_data[Index] == 13) { _data[Index] = 15; }     // ^|
+                else if (_data[Index] == 14) { _data[Index] = 35; }     // =|
+                else if (_data[Index] == 15) { _data[Index] = 10; }     // ^
+                else if (_data[Index] >= 16) { _data[Index] = 195; }    // Empty
+            }
+
+        }
+
 
         public void customAutoTile(int Index)
         {
@@ -158,10 +236,10 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
         public void cave()
         {
-            cave(false);
+            cave(0);
         }
 
-        public void cave(bool custom=false)
+        public void cave(int custom=0)
         {
             int sizeX = LayerEditor.Layer.TileCellsX;
             int sizeY = LayerEditor.Layer.TileCellsY;
@@ -217,9 +295,13 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
             while (ii < totalTiles)
             {
-                if (custom)
+                if (custom==1)
                 {
                     customAutoTile(ii++);
+                }
+                else if (custom == 2)
+                {
+                    squareAutoTile(ii++);
                 }
                 else
                 {
@@ -255,12 +337,18 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             if (Util.Shift)
             {
                 auto = AUTO;
-                cave(true);
+                cave(1);
+            }
+            else if (Util.Ctrl)
+            {
+                auto = SQUARE;
+                cave(2);
+
             }
             else
             {
                 auto = AUTO;
-                cave();
+                cave(0);
             }
         }
 
@@ -269,12 +357,12 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             if (Util.Shift)
             {
                 auto = ALT;
-                cave(true);
+                cave(1);
             }
             else
             {
                 auto = ALT;
-                cave();
+                cave(0);
             }
         }
 

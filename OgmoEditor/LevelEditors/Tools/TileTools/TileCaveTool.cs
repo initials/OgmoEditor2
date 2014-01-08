@@ -149,7 +149,9 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
                     if (_data[total] >= 1)
                     {
-                        SetCaveTile(p, _data[total] - 1);
+                        if (auto == OFF) SetCaveTile(p, 35 - 1);
+                        else SetCaveTile(p, _data[total] - 1);
+                        
                     }
                     else
                     {
@@ -162,13 +164,15 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
         public override void OnMouseLeftDown(System.Drawing.Point location)
         {
-            auto = AUTO;
+            if (Util.Ctrl) auto = OFF;
+            else auto = AUTO;
             cave();
         }
 
         public override void OnMouseRightDown(Point location)
         {
-            auto = ALT;
+            if (Util.Ctrl) auto = OFF;
+            else auto = ALT;
             cave();
         }
 
