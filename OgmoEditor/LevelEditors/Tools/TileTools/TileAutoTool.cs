@@ -33,6 +33,8 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         /// </summary>
         public const int SQUARE = 4;
 
+        private int _extraMiddleTiles = 0;
+
 
         /// <summary>
         /// Set this flag to use one of the 16-tile binary auto-tile algorithms (OFF, AUTO, or ALT).
@@ -48,7 +50,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         {
             int totalTiles = LayerEditor.Layer.TileCellsX * LayerEditor.Layer.TileCellsY;
 
-            if (_data[Index] == 0) return;
+            if (_data[Index] <= 0 ) return;
             _data[Index] = 0;
             if ((Index - widthInTiles < 0) || (_data[Index - widthInTiles] > 0)) 		//UP
                 _data[Index] += 1;
@@ -75,7 +77,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
             //extra part for if you have extra tiles.
 
-            int _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
+            _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
 
             if (_extraMiddleTiles >= 16 && _data[Index] == 16)
             {
@@ -186,7 +188,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
             //extra part for if you have extra tiles.
 
-            int _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
+            _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
 
             if (_extraMiddleTiles >= 16 && _data[Index] == 16)
             {
@@ -254,8 +256,12 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                 {
                     if (LayerEditor.Layer.Tiles[x, y] == -1)
                         level[y, x] = 0;
-                    else
+                    else if (LayerEditor.Layer.Tiles[x, y] <=  LayerEditor.Layer.Tileset.TilesAcross)
                         level[y, x] = 1;
+                    // HACK : Setting this decoration tile to a negative number so doesn't affect auto-tiling
+                    // HACK : Revert to original before setting tile.
+                    else
+                        level[y, x] = (LayerEditor.Layer.Tiles[x, y] + 1) * -1;
                 }
             }
 
@@ -323,9 +329,15 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                     {
                         SetCaveTile(p, _data[total] - 1);
                     }
-                    else
+                    else if (_data[total] == 0)
                     {
                         SetCaveTile(p, -1);
+                    }
+                    // HACK : Since this is a negative number, it's a decoration tile.
+                    // HACK : Reverse the tile number to revert back to decoration.
+                    else if (_data[total] < 0)
+                    {
+                        SetCaveTile(p, (_data[total] + 1)*-1 );
                     }
                     total++;
                 }
