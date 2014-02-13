@@ -42,7 +42,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
         public int auto = 1;
 
         public TileAutoTool()
-            : base("Auto Tile.\nRight=AUTO\nLeft=ALT\nShift+Right=AUTO-Customized\nShift+Left=ALT-Customized", "autotile.png")
+            : base("Auto Tile.\nRight=AUTO\nLeft=ALTERNATE\nShift+Right=AUTO-Customized\nShift+Left=ALTERNATE-Customized\n\nLeft Click+Alt=add decorations.", "autotile.png")
         {
         }
 
@@ -344,6 +344,48 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             }
         }
 
+        public void addDecorations()
+        {
+            int sizeX = LayerEditor.Layer.TileCellsX;
+            int sizeY = LayerEditor.Layer.TileCellsY;
+
+            for (int y = 0; y < sizeY; y++)
+            {
+                for (int x = 0; x < sizeX; x++)
+                {
+                    // up
+                    if (LayerEditor.Layer.Tiles[x, y] == 14 && y>=1)
+                    {
+                        System.Drawing.Point p = new System.Drawing.Point(x * LayerEditor.Layer.Definition.Grid.Width, (y * LayerEditor.Layer.Definition.Grid.Height)-LayerEditor.Layer.Definition.Grid.Height);
+                        SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross, LayerEditor.Layer.Tileset.TilesAcross*2));
+                    }
+                    
+                    //down
+                    if (LayerEditor.Layer.Tiles[x, y] == 11 && y < LayerEditor.Layer.TileCellsY )
+                    {
+                        System.Drawing.Point p = new System.Drawing.Point(x * LayerEditor.Layer.Definition.Grid.Width, (y * LayerEditor.Layer.Definition.Grid.Height) + LayerEditor.Layer.Definition.Grid.Height);
+                        SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross*2, LayerEditor.Layer.Tileset.TilesAcross * 3));
+                    }
+
+                    if (LayerEditor.Layer.Tiles[x, y] == 7 && x >= 1)
+                    {
+                        System.Drawing.Point p = new System.Drawing.Point((x * LayerEditor.Layer.Definition.Grid.Width) - LayerEditor.Layer.Definition.Grid.Width, (y * LayerEditor.Layer.Definition.Grid.Height));
+                        SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross*4, LayerEditor.Layer.Tileset.TilesAcross * 5));
+                    }
+
+                    
+                    if (LayerEditor.Layer.Tiles[x, y] == 13 && y < LayerEditor.Layer.TileCellsX)
+                    {
+                        System.Drawing.Point p = new System.Drawing.Point((x * LayerEditor.Layer.Definition.Grid.Width) + LayerEditor.Layer.Definition.Grid.Width, (y * LayerEditor.Layer.Definition.Grid.Height));
+                        SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross * 3, LayerEditor.Layer.Tileset.TilesAcross * 4));
+                    }
+
+
+
+                }
+            }
+        }
+
         public override void OnMouseLeftDown(System.Drawing.Point location)
         {
             if (Util.Shift)
@@ -355,6 +397,12 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             {
                 auto = SQUARE;
                 cave(2);
+
+            }
+            else if (Util.Alt)
+            {
+                Console.WriteLine("Adding decorations");
+                addDecorations();
 
             }
             else
