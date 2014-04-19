@@ -79,7 +79,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 
             _extraMiddleTiles = LayerEditor.Layer.Tileset.TilesAcross;
 
-            if (_extraMiddleTiles >= 16 && _data[Index] == 16)
+            if (_extraMiddleTiles >= 17 && _data[Index] == 16)
             {
                 _data[Index] += ((int)(FlxCaveGenerator.random(16, _extraMiddleTiles + 1)) - 16);
             }
@@ -256,7 +256,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                 {
                     if (LayerEditor.Layer.Tiles[x, y] == -1)
                         level[y, x] = 0;
-                    else if (LayerEditor.Layer.Tiles[x, y] <=  LayerEditor.Layer.Tileset.TilesAcross)
+                    else if (LayerEditor.Layer.Tiles[x, y] <=  LayerEditor.Layer.Tileset.TilesAcross-1)
                         level[y, x] = 1;
                     // HACK : Setting this decoration tile to a negative number so doesn't affect auto-tiling
                     // HACK : Revert to original before setting tile.
@@ -407,6 +407,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             }
             else
             {
+                Console.WriteLine("-AutoTile()-");
                 auto = AUTO;
                 cave(0);
             }
