@@ -367,14 +367,14 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                         SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross*2, LayerEditor.Layer.Tileset.TilesAcross * 3));
                     }
 
-                    if (LayerEditor.Layer.Tiles[x, y] == 7 && x >= 1)
+                    if ((LayerEditor.Layer.Tiles[x, y] == 7 || LayerEditor.Layer.Tiles[x, y] == 6) && x >= 1)
                     {
                         System.Drawing.Point p = new System.Drawing.Point((x * LayerEditor.Layer.Definition.Grid.Width) - LayerEditor.Layer.Definition.Grid.Width, (y * LayerEditor.Layer.Definition.Grid.Height));
                         SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross*4, LayerEditor.Layer.Tileset.TilesAcross * 5));
                     }
 
-                    
-                    if (LayerEditor.Layer.Tiles[x, y] == 13 && y < LayerEditor.Layer.TileCellsX)
+
+                    if ((LayerEditor.Layer.Tiles[x, y] == 13 || LayerEditor.Layer.Tiles[x, y] == 12) && y < LayerEditor.Layer.TileCellsX)
                     {
                         System.Drawing.Point p = new System.Drawing.Point((x * LayerEditor.Layer.Definition.Grid.Width) + LayerEditor.Layer.Definition.Grid.Width, (y * LayerEditor.Layer.Definition.Grid.Height));
                         SetCaveTile(p, (int)FlxCaveGenerator.random(LayerEditor.Layer.Tileset.TilesAcross * 3, LayerEditor.Layer.Tileset.TilesAcross * 4));
