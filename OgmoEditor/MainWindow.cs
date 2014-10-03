@@ -373,6 +373,11 @@ namespace OgmoEditor
             LevelEditors[Ogmo.CurrentLevelIndex].SaveCameraAsImage();
         }
 
+        /// <summary>
+        /// Edit to give the ability to generate random levels.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void generateRandomLevel_Click(object sender, EventArgs e)
         {
             // Launch an entity (Ladder)
