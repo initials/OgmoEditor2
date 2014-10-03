@@ -60,6 +60,7 @@
             this.duplicateLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCameraAsImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateRandomLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -254,7 +255,9 @@
             this.closeOtherLevelsToolStripMenuItem,
             this.duplicateLevelToolStripMenuItem,
             this.saveAsImageToolStripMenuItem,
-            this.saveCameraAsImageToolStripMenuItem});
+            this.saveCameraAsImageToolStripMenuItem,
+            this.generateRandomLevel
+            });
             this.levelToolStripMenuItem.Enabled = false;
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
             this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -354,6 +357,15 @@
             this.saveCameraAsImageToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.saveCameraAsImageToolStripMenuItem.Text = "Save Camera As Image...";
             this.saveCameraAsImageToolStripMenuItem.Click += new System.EventHandler(this.saveCameraAsImageToolStripMenuItem_Click);
+            // 
+            // Generate Random Level.
+            // 
+            this.generateRandomLevel.Enabled = true;
+            this.generateRandomLevel.Name = "generateRandomLevelToolStripMenuItem";
+            this.generateRandomLevel.Size = new System.Drawing.Size(225, 22);
+            this.generateRandomLevel.Text = "Generate Random Level (Customized for Four Chambers)";
+            this.generateRandomLevel.Click += new System.EventHandler(this.generateRandomLevel_Click);
+
             // 
             // editToolStripMenuItem
             // 
@@ -711,6 +723,7 @@
         private System.Windows.Forms.ToolStripMenuItem duplicateLevelToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveCameraAsImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateRandomLevel;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem centerViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomOutToolStripMenuItem;

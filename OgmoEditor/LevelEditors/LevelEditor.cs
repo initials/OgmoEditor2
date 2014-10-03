@@ -170,6 +170,14 @@ namespace OgmoEditor.LevelEditors
             SaveLevelToImage(new Rectangle(Level.CameraPosition.X, Level.CameraPosition.Y, Ogmo.Project.CameraSize.Width, Ogmo.Project.CameraSize.Height));
         }
 
+        public void generateRandomLevel()
+        {
+            Console.WriteLine("Generating Random Level");
+
+
+
+        }
+
         private void SaveLevelToImage(Rectangle area)
         {
             //Get the path!

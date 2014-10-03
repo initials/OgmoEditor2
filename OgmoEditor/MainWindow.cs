@@ -371,6 +371,16 @@ namespace OgmoEditor
             LevelEditors[Ogmo.CurrentLevelIndex].SaveCameraAsImage();
         }
 
+        private void generateRandomLevel_Click(object sender, EventArgs e)
+        {
+            LevelEditors[Ogmo.CurrentLevelIndex].generateRandomLevel();
+
+            Console.WriteLine("This level is: {0}", LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[0].ToString());
+            Console.WriteLine("This level is: {0}", LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[1].ToString());
+            Console.WriteLine("This level is: {0}", LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2].ToString());
+        }
+
+
         #endregion
 
         #region Edit Menu Events
