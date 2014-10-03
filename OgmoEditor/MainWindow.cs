@@ -400,7 +400,7 @@ namespace OgmoEditor
                 int sizeX = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[2].Layer.Level.Size.Width;
                 int sizeY = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[2].Layer.Level.Size.Height;
 
-                LE.r
+                
                 LE.Perform(
                 new OgmoEditor.LevelEditors.Actions.EntityActions.EntityAddAction( Lyr, new OgmoEditor.LevelData.Layers.Entity(
                         Lyr,
