@@ -8,6 +8,8 @@ using OgmoEditor.LevelData;
 using OgmoEditor.LevelEditors;
 using OgmoEditor.Windows;
 using OgmoEditor.Windows.Utilities;
+using OgmoEditor.LevelEditors.Tools;
+
 
 namespace OgmoEditor
 {
@@ -373,11 +375,113 @@ namespace OgmoEditor
 
         private void generateRandomLevel_Click(object sender, EventArgs e)
         {
+            // Launch an entity (Ladder)
+
+
+            for (int i = 0; i < 5; i++)
+            {
+                //Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+                //new OgmoEditor.LevelEditors.Actions.EntityActions.EntityAddAction(
+                //    (OgmoEditor.LevelData.Layers.EntityLayer)LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2],
+                //    new OgmoEditor.LevelData.Layers.Entity(
+                //        (OgmoEditor.LevelData.Layers.EntityLayer)LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2],
+                //        Ogmo.EntitiesWindow.CurrentEntity, 
+                //        new Point(
+                //            (int)OgmoEditor.LevelEditors.Tools.FlxCaveGeneratorExt.random(0, sizeX),
+                //            (int)OgmoEditor.LevelEditors.Tools.FlxCaveGeneratorExt.random(0, sizeY)
+                //            )
+                //        )
+                //    )
+                //);
+
+                LevelEditor LE = Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex];
+                LevelData.Layers.EntityLayer Lyr = (OgmoEditor.LevelData.Layers.EntityLayer)LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2];
+
+                int sizeX = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[2].Layer.Level.Size.Width;
+                int sizeY = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[2].Layer.Level.Size.Height;
+
+                LE.r
+                LE.Perform(
+                new OgmoEditor.LevelEditors.Actions.EntityActions.EntityAddAction( Lyr, new OgmoEditor.LevelData.Layers.Entity(
+                        Lyr,
+                        Ogmo.EntitiesWindow.CurrentEntity,
+                        new Point(
+                            (int)FlxCaveGeneratorExt.random(0, sizeX),
+                            (int)FlxCaveGeneratorExt.random(0, sizeY)
+                            )
+                        )
+                    )
+                );
+
+            }
+
+            Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+                new OgmoEditor.LevelEditors.Actions.EntityActions.EntityAddAction(
+                    (OgmoEditor.LevelData.Layers.EntityLayer)LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2],
+                    new OgmoEditor.LevelData.Layers.Entity((OgmoEditor.LevelData.Layers.EntityLayer)LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2],
+                        Ogmo.EntitiesWindow.CurrentEntity, new Point(32, 32))));
+
             LevelEditors[Ogmo.CurrentLevelIndex].generateRandomLevel();
 
             Console.WriteLine("This level is: {0}", LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[0].ToString());
             Console.WriteLine("This level is: {0}", LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[1].ToString());
             Console.WriteLine("This level is: {0}", LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2].ToString());
+
+
+
+
+
+
+
+
+//            OgmoEditor.LevelEditors.Tools.EntityTools.EntityPlacementTool.
+
+
+
+
+
+
+
+
+
+
+
+
+            //OgmoEditor.LevelData.Layers.Entity e2 = Ogmo.EntitySelectionWindow.Selected[0];
+
+            //foreach (var item in  ((OgmoEditor.LevelData.Layers.EntityLayer)Ogmo.EntitiesWindow.CurrentEntity.Name)
+            //{
+            //    Console.WriteLine(item.ToString() );
+            //}
+
+            //OgmoEditor.LevelData.Layers.Entity e3 = Ogmo.EntitiesWindow.CurrentEntity;
+            
+            //((OgmoEditor.LevelData.Layers.EntityLayer)Ogmo.CurrentLevel.Layers[Ogmo.LayersWindow.CurrentLayerIndex]).Entities.FindAll(en => en.Definition == entity.Definition)
+
+            //Console.WriteLine(((OgmoEditor.LevelData.Layers.EntityLayer)Ogmo.CurrentLevel.Layers[2]).Entities);
+            
+            //foreach (var e4 in Ogmo.EntitySelectionWindow.Selected)
+            //{
+            //    Console.WriteLine(e4.ToString());
+            //}
+
+
+
+            //Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+            //    new OgmoEditor.LevelEditors.Actions.EntityActions.EntityInsertNodeAction(
+            //        (OgmoEditor.LevelData.Layers.EntityLayer)LevelEditors[Ogmo.CurrentLevelIndex].Level.Layers[2],
+            //        Ogmo.EntitySelectionWindow.Selected[0], new Point(32, 32), 0
+            //        ));
+
+            LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].SelectAll();
+
+            //LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+            
+            //LevelEditors[Ogmo.CurrentLevelIndex].Perform(new EntityAddAction(LayerEditor.Layer, new Entity(LayerEditor.Layer, Ogmo.EntitiesWindow.CurrentEntity, Util.Ctrl ? LevelEditor.MousePosition : LayerEditor.MouseSnapPosition)));
+            
+            //LevelEditor.Perform(new EntityAddAction(LayerEditor.Layer, 
+            //new Entity(LayerEditor.Layer, Ogmo.EntitiesWindow.CurrentEntity, Util.Ctrl ? LevelEditor.MousePosition : LayerEditor.MouseSnapPosition)));
+
         }
 
 
