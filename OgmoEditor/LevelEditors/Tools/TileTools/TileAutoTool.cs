@@ -246,6 +246,9 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
             int sizeX = LayerEditor.Layer.TileCellsX;
             int sizeY = LayerEditor.Layer.TileCellsY;
 
+            Console.WriteLine("Size X {0} Size Y {1} - crashes? ", sizeX, sizeY);
+
+
             FlxCaveGenerator cave = new FlxCaveGenerator(sizeX, sizeY);
             cave.genInitMatrix(sizeX, sizeY);
             int[,] level = cave.generateCaveLevel();
@@ -291,6 +294,10 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
                 if (widthInTiles == 0)
                     widthInTiles = cols.Length;
                 c = 0;
+
+                // TODO: 
+                // This causes a crash in some situations. //
+
                 while (c < widthInTiles)
                     _data[((r - 1) * widthInTiles) + c] = int.Parse(cols[c++]);
             }
